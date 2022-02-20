@@ -5,6 +5,7 @@ import appRouters from './routers';
 const SERVER_PORT = process.env.SERVER_PORT;
 const app = express();
 const logger = morgan('dev');
+app.set('view engine', 'pug');
 app.use(logger);
 
 const routers = appRouters();
