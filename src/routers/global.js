@@ -3,7 +3,7 @@ import express from 'express';
 export default function globalRouter() {
   const router = express.Router();
   const getHomepage = (req, res) => {
-    res.send('Homepage');
+    res.render('home');
   };
   router.get('/', getHomepage);
 
