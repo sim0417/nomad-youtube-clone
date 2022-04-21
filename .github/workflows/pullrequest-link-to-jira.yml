@@ -12,7 +12,7 @@ jobs:
         uses: cybervoid/gajira-get-issue@v1.1
         id: find
         with:
-          input-text: ${{ github.head_ref }}
+          input-text: ${{ github.ref }}
 
       - name: Update PR body
         uses: AsasInnab/pr-body-action@v1
