@@ -8,18 +8,12 @@ jobs:
   link_jira_issue: # 작업 이름
     runs-on: ubuntu-latest
     steps:
-      - name: Jira Login
-        uses: atlassian/gajira-login@master
-        env:
-          JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
-          JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
-          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
-
-      # - name: Find Jira Issue
-      #   uses: cybervoid/gajira-get-issue@v1.1
-      #   id: find
-      #   with:
-      #     input-text: ${{ github.head_ref }}
+      # - name: Jira Login
+      #   uses: atlassian/gajira-login@master
+      #   env:
+      #     JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
+      #     JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
+      #     JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
 
       - name: Find in commit messages
         uses: atlassian/gajira-find-issue-key@master
