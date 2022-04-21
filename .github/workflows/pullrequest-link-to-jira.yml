@@ -8,18 +8,24 @@ jobs:
   link_jira_issue: # 작업 이름
     runs-on: ubuntu-latest
     steps:
-      - name: Login
+      - name: Login Jira
         uses: atlassian/gajira-login@master
         env:
           JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
           JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
           JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
 
+      # - name: Find Jira Issue
+      #   uses: cybervoid/gajira-get-issue@v1.1
+      #   id: find
+      #   with:
+      #     input-text: ${{ github.head_ref }}
+
       - name: Find Jira Issue
-        uses: cybervoid/gajira-get-issue@v1.1
+        uses: atlassian/gajira-find-issue-key@master
         id: find
         with:
-          input-text: ${{ github.head_ref }}
+          from: branch
 
       - name: Update PR body
         uses: AsasInnab/pr-body-action@v1
