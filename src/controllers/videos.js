@@ -32,3 +32,8 @@ export const editVideo = (req, res) => {
     video,
   });
 };
+
+export const saveVideo = (req, res) => {
+  console.log(req.body);
+  res.redirect('/');
+};
