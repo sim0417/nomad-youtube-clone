@@ -1,6 +1,6 @@
 import newUsersRouter from './users';
 import newVideosRouter from './videos';
-import newGlobalRouter from './global';
+import newRootRouter from './root';
 
 export default function appRouters() {
   const routers = [];
@@ -10,8 +10,8 @@ export default function appRouters() {
   const videosRouter = newVideosRouter();
   routers.push({ path: '/videos', router: videosRouter });
 
-  const globalRouter = newGlobalRouter();
-  routers.push({ path: '/', router: globalRouter });
+  const rootRouter = newRootRouter();
+  routers.push({ path: '/', router: rootRouter });
 
   return routers;
 }
