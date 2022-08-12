@@ -37,3 +37,13 @@ export const saveVideo = (req, res) => {
   console.log(req.body);
   res.redirect('/');
 };
+
+export const postVideo = (req, res) => {
+  res.redirect('/');
+};
+
+export const getUpload = (req, res) => {
+  res.render('upload', {
+    pageTitle: `Upload Video`,
+  });
+};
