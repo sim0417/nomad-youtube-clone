@@ -10,7 +10,7 @@ import {
 
 export default function videosRouter() {
   const router = express.Router();
-  const PARAM_ID = ':id(\\d+)';
+  const PARAM_ID = ':id([0-9a-f]{24})';
 
   router.get('/', getVideos);
   router.get(`/${PARAM_ID}`, watchVideo);

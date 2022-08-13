@@ -3,7 +3,14 @@ extends base.pug
 block contents
   h3 hello from upload
 
+  if(errorMessage)
+    span=errorMessage
+
   form(method="POST")
     label(for="video-title") Title
-    input(type="text", required, placeholder="video title" id="video-title" name="title")
+    input(type="text", required, placeholder="Title" id="video-title" name="title" maxlength="80")
+    label(for="video-desc") Description
+    input(type="text", required, placeholder="Description" id="video-desc" name="description" maxlength="300")
+    label(for="video-hashtags") Hashtags
+    input(type="text", required, placeholder="Hashtags, seperated by comma" id="video-hashtags" name="hashtags")
     input(type="submit", value="Upload")
