@@ -1,10 +1,13 @@
 extends base.pug
 
 block contents
-  h3 Change Title of video
+  h3 Chnages video info
     form(method="POST")
-      input(name="title" placeholder="Video title", value=video.title, required)
-      input(value="Save" type="submit")
-
-
+      label(for="video-title") Title
+      input(type="text", required, placeholder="Title" id="video-title" name="title" maxlength="80", value=video.title)
+      label(for="video-desc") Description
+      input(type="text", required, placeholder="Description" id="video-desc" name="description" maxlength="300", value=video.description)
+      label(for="video-hashtags") Hashtags
+      input(type="text", required, placeholder="Hashtags, seperated by comma" id="video-hashtags" name="hashtags",  value=video.hashtags.join(', '))
+      input(type="submit", value="Save")
 

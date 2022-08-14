@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose';
+import { parseHashtags } from '../util';
 
 const videoSchema = new Schema({
   title: { type: String, required: true, trim: true, maxLength: 80 },
@@ -9,6 +10,10 @@ const videoSchema = new Schema({
     views: { type: Number, required: true, defult: 0 },
     rating: { type: Number, required: true, defult: 0 },
   },
+});
+
+videoSchema.static('parseHashtags', (hashtags) => {
+  return parseHashtags(hashtags);
 });
 
 const videoModel = model('videos', videoSchema);
