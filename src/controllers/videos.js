@@ -80,3 +80,9 @@ export const getUpload = (req, res) => {
     pageTitle: `Upload Video`,
   });
 };
+
+export const deleteVideo = async (req, res) => {
+  const { id } = req.params;
+  await Videos.findByIdAndDelete(id);
+  res.redirect('/');
+};
