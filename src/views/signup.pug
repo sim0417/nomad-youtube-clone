@@ -1,0 +1,14 @@
+extends base.pug
+
+block contents
+
+  if(errorMessage)
+    spen=errorMessage
+
+  form(method="POST")
+    input(type="email", required, placeholder="email" name="email")
+    input(type="text", required, placeholder="name" name="name")
+    input(type="password", required, placeholder="password" name="password")
+    input(type="password", required, placeholder="confirm password" name="confirm_password")
+    input(type="text", placeholder="location" name="location")
+    input(type="submit", value="Signup")

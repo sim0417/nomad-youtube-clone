@@ -1,7 +1,8 @@
 import Videos from '../models/videos';
 
-export const getVideos = (req, res) => {
-  res.send('getVideos');
+export const getVideos = async (req, res) => {
+  const videos = await Videos.find({});
+  res.render('home', { pageTitle: 'Home', videos });
 };
 
 export const watchVideo = async (req, res) => {
@@ -9,7 +10,7 @@ export const watchVideo = async (req, res) => {
   const video = await Videos.findById(id);
 
   if (!video) {
-    return res.render('404', { pageTitle: 'Video not found' });
+    return res.status(404).render('404', { pageTitle: 'Video not found' });
   }
 
   res.render('watch', {
@@ -23,7 +24,7 @@ export const editVideo = async (req, res) => {
   const video = await Videos.findById(id);
 
   if (!video) {
-    return res.render('404', { pageTitle: 'Video not found' });
+    return res.status(404).render('404', { pageTitle: 'Video not found' });
   }
 
   res.render('edit', {
@@ -38,7 +39,7 @@ export const saveVideo = async (req, res) => {
   const isExists = await Videos.exists({ _id: id });
 
   if (!isExists) {
-    return res.render('404', { pageTitle: 'Video not found' });
+    return res.status(404).render('404', { pageTitle: 'Video not found' });
   }
 
   await Videos.findByIdAndUpdate(id, {
@@ -85,4 +86,19 @@ export const deleteVideo = async (req, res) => {
   const { id } = req.params;
   await Videos.findByIdAndDelete(id);
   res.redirect('/');
+};
+
+export const searchVideo = async (req, res) => {
+  const { keyword } = req.query;
+  let videos = [];
+
+  if (keyword) {
+    videos = await Videos.find({
+      title: {
+        $regex: new RegExp(keyword, 'i'),
+      },
+    }).sort({ createdAt: 'desc' });
+  }
+
+  res.render('search', { pageTitle: 'Search', videos });
 };

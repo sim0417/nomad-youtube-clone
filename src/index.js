@@ -1,5 +1,6 @@
 import './db';
 import './models/videos';
+import './models/users';
 import express from 'express';
 import morgan from 'morgan';
 import appRouters from './routers';

@@ -1,10 +1,13 @@
 import express from 'express';
-import { getHomepage, search } from '../controllers/root';
+import { getVideos, searchVideo } from '../controllers/videos';
+import { viewSignup, signup } from '../controllers/users';
 
 export default function rootRouter() {
   const router = express.Router();
-  router.get('/', getHomepage);
-  router.get('/search', search);
+  router.get('/', getVideos);
+  router.get('/search', searchVideo);
+  router.get('/signup', viewSignup);
+  router.post('/signup', signup);
 
   return router;
 }
