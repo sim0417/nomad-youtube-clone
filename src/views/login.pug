@@ -1,0 +1,15 @@
+extends base.pug
+
+block contents
+  if(errorMessage)
+    spen=errorMessage
+
+  form(method="POST")
+    input(type="email", required, placeholder="email" name="email")
+    input(type="password", required, placeholder="password" name="password")
+    input(type="submit", value="Login")
+  hr
+
+  div
+    span Don't have an account ? 
+    a(href="/signup") Signup now &rarr;

@@ -2,6 +2,7 @@ import './db';
 import './models/videos';
 import './models/users';
 import express from 'express';
+import session from 'express-session';
 import morgan from 'morgan';
 import appRouters from './routers';
 
@@ -11,6 +12,13 @@ const logger = morgan('dev');
 app.set('views', `${process.cwd()}/src/views`);
 app.set('view engine', 'pug');
 app.use(logger);
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: true,
+    saveUninitialized: true,
+  }),
+);
 app.use(express.urlencoded({ extended: true }));
 
 const routers = appRouters();

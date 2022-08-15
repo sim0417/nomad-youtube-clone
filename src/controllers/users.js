@@ -1,4 +1,5 @@
 import Users from '../models/users';
+import bcrypt from 'bcrypt';
 
 export const getUser = (req, res) => {
   res.send('getUser');
@@ -37,4 +38,27 @@ export const signup = async (req, res) => {
 
 export const viewLogin = (req, res) => {
   res.render('login', { pageTitle: 'Login' });
+};
+
+export const login = async (req, res) => {
+  const { email, password } = req.body;
+  const user = await Users.findOne({ email });
+  if (!user) {
+    return res.status(400).render('login', {
+      pageTitle: 'Login',
+      errorMessage: 'check ID and password',
+    });
+  }
+
+  const isPassowrdVaild = await bcrypt.compare(password, user.password);
+  if (!isPassowrdVaild) {
+    return res.status(400).render('login', {
+      pageTitle: 'Login',
+      errorMessage: 'check ID and password',
+    });
+  }
+
+  req.session.isLogin = true;
+  req.session.user = user;
+  res.redirect('/');
 };
