@@ -5,6 +5,7 @@ import express from 'express';
 import session from 'express-session';
 import morgan from 'morgan';
 import appRouters from './routers';
+import { setLocalData } from './middlewares';
 
 const SERVER_PORT = process.env.SERVER_PORT;
 const app = express();
@@ -20,6 +21,8 @@ app.use(
   }),
 );
 app.use(express.urlencoded({ extended: true }));
+
+app.use(setLocalData);
 
 const routers = appRouters();
 routers.forEach(({ path, router }) => app.use(path, router));
