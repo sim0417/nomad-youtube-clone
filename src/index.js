@@ -1,23 +1,28 @@
 import './db';
 import './models/videos';
 import './models/users';
+import path from 'path';
 import express from 'express';
 import session from 'express-session';
+import favicon from 'serve-favicon';
 import morgan from 'morgan';
 import appRouters from './routers';
 import { setLocalData } from './middlewares';
+import MongoStore from 'connect-mongo';
 
 const SERVER_PORT = process.env.SERVER_PORT;
 const app = express();
 const logger = morgan('dev');
 app.set('views', `${process.cwd()}/src/views`);
 app.set('view engine', 'pug');
+app.use(favicon(path.join(__dirname, 'public', 'favicon.png')));
 app.use(logger);
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
-    resave: true,
-    saveUninitialized: true,
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({ mongoUrl: process.env.MONGO_URI }),
   }),
 );
 app.use(express.urlencoded({ extended: true }));

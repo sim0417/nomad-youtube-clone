@@ -20,11 +20,13 @@
   "dependencies": {
     "bcrypt": "^5.0.1",
     "connect-mongo": "^4.6.0",
+    "cross-fetch": "^3.1.5",
     "express": "^4.17.2",
     "express-session": "^1.17.3",
     "mongoose": "^6.5.2",
     "morgan": "^1.10.0",
-    "pug": "^3.0.2"
+    "pug": "^3.0.2",
+    "serve-favicon": "^2.5.0"
   },
   "devDependencies": {
     "@babel/core": "^7.16.12",
