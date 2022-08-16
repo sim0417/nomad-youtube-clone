@@ -119,7 +119,6 @@ export const authGithubCallback = async (req, res) => {
     }
     const { email } = userEmailData;
     let user = await Users.findOne({ email, type: 'github' });
-
     if (!user) {
       const { name, location, avatar_url } = githubUser;
       user = await Users.create({
@@ -128,6 +127,7 @@ export const authGithubCallback = async (req, res) => {
         name,
         password: '',
         location,
+        avatarUrl: avatar_url,
       });
     }
 
@@ -140,7 +140,16 @@ export const authGithubCallback = async (req, res) => {
   res.redirect('/login');
 };
 
-export const logout = (req, res) => res.send('logout');
-export const viewEdit = (req, res) => res.send('viewEdit');
-export const viewProfile = (req, res) => res.send('logout');
-export const signout = (req, res) => res.send('signout');
+export const logout = (req, res) => {
+  req.session.destroy();
+  res.redirect('/');
+};
+
+export const editProfile = (req, res) => {
+  const {} = req.body;
+  res.redirect('/');
+};
+
+export const viewProfile = (req, res) => {
+  res.render('profile', { pageTitle: 'Profile' });
+};

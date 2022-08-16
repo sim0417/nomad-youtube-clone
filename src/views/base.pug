@@ -1,5 +1,5 @@
 doctype html
-html(lang="ko")
+html(lang="ko" color-mode="user")
   head 
     title #{pageTitle} | #{siteName}
     link(rel="stylesheet" href="https://unpkg.com/mvp.css")
@@ -22,7 +22,7 @@ html(lang="ko")
                 a(href="/login") Login
             else
               li
-                a(href="/logout") Logout
+                a(href="/users/logout") Logout
               li
                 a(href="/profile") Profile
 

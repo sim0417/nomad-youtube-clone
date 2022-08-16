@@ -3,7 +3,7 @@ import {
   logout,
   viewEdit,
   viewProfile,
-  signout,
+  editProfile,
   authGithub,
   authGithubCallback,
 } from '../controllers/users';
@@ -13,11 +13,10 @@ export default function usersRouter() {
 
   router.get('/logout', logout);
   router.get('/edit', viewEdit);
-  router.get('/remove', signout);
   router.get('/github', authGithub);
   router.get('/github/callback', authGithubCallback);
-
-  router.get('/:id', viewProfile);
+  router.get('/profile', viewProfile);
+  router.post('/profile', editProfile);
 
   return router;
 }
