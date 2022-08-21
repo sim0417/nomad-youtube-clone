@@ -1,0 +1,7 @@
+extends base.pug
+
+block contents
+  form(method="POST")
+    input(type="text", required, placeholder="name" name="name" value=user.name)
+    input(type="text", placeholder="location" name="location" value=user.location)
+    input(type="submit", value="Edit profile")

@@ -150,6 +150,6 @@ export const editProfile = (req, res) => {
   res.redirect('/');
 };
 
-export const viewProfile = (req, res) => {
-  res.render('profile', { pageTitle: 'Profile' });
+export const viewEditProfile = (req, res) => {
+  res.render('edit-profile', { pageTitle: 'Profile' });
 };
