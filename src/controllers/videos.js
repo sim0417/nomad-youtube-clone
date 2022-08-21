@@ -13,7 +13,7 @@ export const watchVideo = async (req, res) => {
     return res.status(404).render('404', { pageTitle: 'Video not found' });
   }
 
-  res.render('watch', {
+  res.render('videos/watch', {
     pageTitle: `${video.title}`,
     video,
   });
@@ -27,7 +27,7 @@ export const editVideo = async (req, res) => {
     return res.status(404).render('404', { pageTitle: 'Video not found' });
   }
 
-  res.render('edit', {
+  res.render('videos/edit', {
     pageTitle: `Edit : ${video.title}`,
     video,
   });
@@ -69,7 +69,7 @@ export const postVideo = async (req, res) => {
   } catch (error) {
     console.error('save video error : ', error);
 
-    res.render('upload', {
+    res.render('videos/upload', {
       pageTitle: `Upload Video`,
       errorMessage: error._message,
     });
@@ -77,7 +77,7 @@ export const postVideo = async (req, res) => {
 };
 
 export const getUpload = (req, res) => {
-  res.render('upload', {
+  res.render('videos/upload', {
     pageTitle: `Upload Video`,
   });
 };
@@ -100,5 +100,5 @@ export const searchVideo = async (req, res) => {
     }).sort({ createdAt: 'desc' });
   }
 
-  res.render('search', { pageTitle: 'Search', videos });
+  res.render('videos/search', { pageTitle: 'Search', videos });
 };

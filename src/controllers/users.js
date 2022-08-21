@@ -7,7 +7,7 @@ export const getUser = (req, res) => {
 };
 
 export const viewSignup = (req, res) => {
-  res.render('signup', { pageTitle: 'Signup' });
+  res.render('users/signup', { pageTitle: 'Signup' });
 };
 
 export const signup = async (req, res) => {
@@ -38,7 +38,7 @@ export const signup = async (req, res) => {
 };
 
 export const viewLogin = (req, res) => {
-  res.render('login', { pageTitle: 'Login' });
+  res.render('users/login', { pageTitle: 'Login' });
 };
 
 export const login = async (req, res) => {
@@ -145,11 +145,27 @@ export const logout = (req, res) => {
   res.redirect('/');
 };
 
-export const editProfile = (req, res) => {
-  const {} = req.body;
-  res.redirect('/');
+export const editProfile = async (req, res) => {
+  const {
+    session: {
+      user: { _id },
+    },
+    body: { name, location },
+  } = req;
+
+  const updateUser = await Users.findByIdAndUpdate(
+    _id,
+    {
+      name,
+      location,
+    },
+    { new: true },
+  );
+
+  req.session.user = updateUser;
+  res.redirect('/users/edit-profile');
 };
 
 export const viewEditProfile = (req, res) => {
-  res.render('edit-profile', { pageTitle: 'Profile' });
+  res.render('users/edit-profile', { pageTitle: 'Profile' });
 };
