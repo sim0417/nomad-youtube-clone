@@ -7,14 +7,8 @@ export default function rootRouter() {
   const router = express.Router();
   router.get('/', getVideos);
   router.get('/search', searchVideo);
-
-  router.all('/signup', blockLoginUser);
-  router.get('/signup', viewSignup);
-  router.post('/signup', signup);
-
-  router.all('/login', blockLoginUser);
-  router.get('/login', viewLogin);
-  router.post('/login', login);
+  router.route('/signup').all(blockLoginUser).get(viewSignup).post(signup);
+  router.route('/login').all(blockLoginUser).get(viewLogin).post(login);
 
   return router;
 }

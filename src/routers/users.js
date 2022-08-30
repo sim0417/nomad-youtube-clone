@@ -5,6 +5,8 @@ import {
   editProfile,
   authGithub,
   authGithubCallback,
+  viewEditPassword,
+  editPassword,
 } from '../controllers/users';
 import { blockNotLoginUser, blockLoginUser } from '../middlewares';
 
@@ -15,9 +17,17 @@ export default function usersRouter() {
   router.get('/github', blockLoginUser, authGithub);
   router.get('/github/callback', blockLoginUser, authGithubCallback);
 
-  router.all('/edit-profile', blockNotLoginUser);
-  router.get('/edit-profile', viewEditProfile);
-  router.post('/edit-profile', editProfile);
+  router
+    .route('/edit-profile')
+    .all(blockNotLoginUser)
+    .get(viewEditProfile)
+    .post(editProfile);
+
+  router
+    .route('/edit-password')
+    .all(blockNotLoginUser)
+    .get(viewEditPassword)
+    .post(editPassword);
 
   return router;
 }
