@@ -169,3 +169,44 @@ export const editProfile = async (req, res) => {
 export const viewEditProfile = (req, res) => {
   res.render('users/edit-profile', { pageTitle: 'Profile' });
 };
+
+export const viewEditPassword = (req, res) => {
+  const {
+    user: { type },
+  } = req.session;
+  if (type !== 'email') {
+    return res.redirect('/users/edit-profile');
+  }
+
+  res.render('users/edit-password', { pageTitle: 'Edit password' });
+};
+
+export const editPassword = async (req, res) => {
+  const {
+    session: {
+      user: { _id },
+    },
+    body: { old_password, password, confirm_password },
+  } = req;
+
+  const user = await Users.findById(_id);
+  const isUserOldPassword = await bcrypt.compare(old_password, user.password);
+  if (!isUserOldPassword) {
+    return res.status(400).render('users/edit-password', {
+      pageTitle: 'Edit password',
+      errorMessage: 'Check old passowrd',
+    });
+  }
+
+  if (password !== confirm_password) {
+    return res.status(400).render('users/edit-password', {
+      pageTitel: 'Edit password',
+      errorMessage: 'Check passowrd',
+    });
+  }
+
+  user.password = password;
+  await user.save();
+
+  return res.redirect('/users/logout');
+};
