@@ -45,7 +45,7 @@ export const login = async (req, res) => {
   const { email, password } = req.body;
   const user = await Users.findOne({ email, type: 'email' });
   if (!user) {
-    return res.status(400).render('login', {
+    return res.status(400).render('users/login', {
       pageTitle: 'Login',
       errorMessage: 'check ID and password',
     });
@@ -53,7 +53,7 @@ export const login = async (req, res) => {
 
   const isPassowrdVaild = await bcrypt.compare(password, user.password);
   if (!isPassowrdVaild) {
-    return res.status(400).render('login', {
+    return res.status(400).render('users/login', {
       pageTitle: 'Login',
       errorMessage: 'check ID and password',
     });
