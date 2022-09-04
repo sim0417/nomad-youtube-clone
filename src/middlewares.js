@@ -1,3 +1,5 @@
+import multer from 'multer';
+
 export const setLocalData = (req, res, next) => {
   const { isLogin, user } = req.session;
   res.locals.user = user || {};
@@ -21,3 +23,5 @@ export const blockLoginUser = (req, res, next) => {
   }
   next();
 };
+
+export const uploadFiles = multer({ dest: 'uploads/' });

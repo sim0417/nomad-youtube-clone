@@ -151,7 +151,10 @@ export const editProfile = async (req, res) => {
       user: { _id },
     },
     body: { name, location },
+    file: avatarFile,
   } = req;
+
+  console.log('avatarFile : ', avatarFile);
 
   const updateUser = await Users.findByIdAndUpdate(
     _id,
