@@ -52,13 +52,18 @@ export const saveVideo = async (req, res) => {
 };
 
 export const postVideo = async (req, res) => {
-  const { title, description, hashtags } = req.body;
+  const {
+    body: { title, description, hashtags },
+    file: { path: fileUrl },
+  } = req;
+
   try {
     await Videos.create({
       title,
       description,
       createdAt: Date.now(),
       hashtags: Videos.parseHashtags(hashtags),
+      fileUrl,
       meta: {
         views: 0,
         rating: 0,
@@ -69,7 +74,7 @@ export const postVideo = async (req, res) => {
   } catch (error) {
     console.error('save video error : ', error);
 
-    res.render('videos/upload', {
+    res.status(400).render('videos/upload', {
       pageTitle: `Upload Video`,
       errorMessage: error._message,
     });

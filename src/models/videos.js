@@ -6,6 +6,7 @@ const videoSchema = new Schema({
   description: { type: String, required: true, trim: true, maxLength: 300 },
   createdAt: { type: Date, required: true, default: Date.now },
   hashtags: [{ type: String, trim: true }],
+  fileUrl: { type: String, required: true },
   meta: {
     views: { type: Number, required: true, defult: 0 },
     rating: { type: Number, required: true, defult: 0 },

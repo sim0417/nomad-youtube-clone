@@ -8,7 +8,11 @@ import {
   viewEditPassword,
   editPassword,
 } from '../controllers/users';
-import { blockNotLoginUser, blockLoginUser, uploadFiles } from '../middlewares';
+import {
+  blockNotLoginUser,
+  blockLoginUser,
+  uploadAvatarFiles,
+} from '../middlewares';
 
 export default function usersRouter() {
   const router = express.Router();
@@ -21,7 +25,7 @@ export default function usersRouter() {
     .route('/edit-profile')
     .all(blockNotLoginUser)
     .get(viewEditProfile)
-    .post(uploadFiles.single('avatar'), editProfile);
+    .post(uploadAvatarFiles.single('avatar'), editProfile);
 
   router
     .route('/edit-password')

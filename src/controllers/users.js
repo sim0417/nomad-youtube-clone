@@ -148,17 +148,16 @@ export const logout = (req, res) => {
 export const editProfile = async (req, res) => {
   const {
     session: {
-      user: { _id },
+      user: { _id, avatarUrl },
     },
     body: { name, location },
     file: avatarFile,
   } = req;
 
-  console.log('avatarFile : ', avatarFile);
-
   const updateUser = await Users.findByIdAndUpdate(
     _id,
     {
+      avatarUrl: avatarFile ? avatarFile.path : avatarUrl,
       name,
       location,
     },

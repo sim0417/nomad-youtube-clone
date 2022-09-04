@@ -8,7 +8,7 @@ import {
   getUpload,
   deleteVideo,
 } from '../controllers/videos';
-import { blockNotLoginUser } from '../middlewares';
+import { blockNotLoginUser, uploadVideoFiles } from '../middlewares';
 
 export default function videosRouter() {
   const router = express.Router();
@@ -23,7 +23,11 @@ export default function videosRouter() {
     .post(saveVideo)
     .get(editVideo);
   router.route(`/${PARAM_ID}/delete`).all(blockNotLoginUser).get(deleteVideo);
-  router.route('/upload').all(blockNotLoginUser).post(postVideo).get(getUpload);
+  router
+    .route('/upload')
+    .all(blockNotLoginUser)
+    .post(uploadVideoFiles.single('video'), postVideo)
+    .get(getUpload);
 
   return router;
 }
