@@ -1,4 +1,5 @@
 import Users from '../models/users';
+import Videos from '../models/videos';
 import bcrypt from 'bcrypt';
 import fetch from 'cross-fetch';
 
@@ -215,7 +216,7 @@ export const editPassword = async (req, res) => {
 
 export const viewUserProfile = async (req, res) => {
   const { id } = req.params;
-  const user = await Users.findById(id);
+  const user = await Users.findById(id).populate('videos');
 
   if (!user) {
     return res.status(404).render('404', { pageTitle: 'User not found.' });

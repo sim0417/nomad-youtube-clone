@@ -8,12 +8,14 @@ const userSchema = new Schema({
   password: String,
   location: { type: String, default: null },
   avatarUrl: { type: String, default: null },
+  videos: [{ type: Schema.Types.ObjectId, ref: 'videos' }],
 });
 
 userSchema.pre('save', async function () {
-  const saltRounds = Number(process.env.HASH_ROUNDS);
-  const hashPassword = await bcrypt.hash(this.password, saltRounds);
-  this.password = hashPassword;
+  if (this.isModified('password')) {
+    const saltRounds = Number(process.env.HASH_ROUNDS);
+    this.password = await bcrypt.hash(this.password, saltRounds);
+  }
 });
 
 const userModel = model('users', userSchema);

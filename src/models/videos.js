@@ -11,6 +11,7 @@ const videoSchema = new Schema({
     views: { type: Number, required: true, defult: 0 },
     rating: { type: Number, required: true, defult: 0 },
   },
+  owner: { type: Schema.Types.ObjectId, required: true, ref: 'users' },
 });
 
 videoSchema.static('parseHashtags', (hashtags) => {

@@ -1,4 +1,5 @@
 import Videos from '../models/videos';
+import Users from '../models/users';
 
 export const getVideos = async (req, res) => {
   const videos = await Videos.find({});
@@ -7,7 +8,7 @@ export const getVideos = async (req, res) => {
 
 export const watchVideo = async (req, res) => {
   const { id } = req.params;
-  const video = await Videos.findById(id);
+  const video = await Videos.findById(id).populate('owner');
 
   if (!video) {
     return res.status(404).render('404', { pageTitle: 'Video not found' });
@@ -21,10 +22,15 @@ export const watchVideo = async (req, res) => {
 
 export const editVideo = async (req, res) => {
   const { id } = req.params;
+  const { user } = req.session;
   const video = await Videos.findById(id);
 
   if (!video) {
     return res.status(404).render('404', { pageTitle: 'Video not found' });
+  }
+
+  if (String(video.owner) !== String(user._id)) {
+    return res.status(403).redirect('/');
   }
 
   res.render('videos/edit', {
@@ -35,11 +41,16 @@ export const editVideo = async (req, res) => {
 
 export const saveVideo = async (req, res) => {
   const { id } = req.params;
+  const { user } = req.session;
   const { title, description, hashtags } = req.body;
-  const isExists = await Videos.exists({ _id: id });
+  const video = await Videos.exists({ _id: id });
 
-  if (!isExists) {
+  if (!video) {
     return res.status(404).render('404', { pageTitle: 'Video not found' });
+  }
+
+  if (String(video.owner) !== String(user._id)) {
+    return res.status(403).redirect('/');
   }
 
   await Videos.findByIdAndUpdate(id, {
@@ -53,12 +64,13 @@ export const saveVideo = async (req, res) => {
 
 export const postVideo = async (req, res) => {
   const {
+    session: { user },
     body: { title, description, hashtags },
     file: { path: fileUrl },
   } = req;
 
   try {
-    await Videos.create({
+    const newVideo = await Videos.create({
       title,
       description,
       createdAt: Date.now(),
@@ -68,7 +80,12 @@ export const postVideo = async (req, res) => {
         views: 0,
         rating: 0,
       },
+      owner: user._id,
     });
+
+    const user = await Users.findById(user._id);
+    user.videos.push(newVideo._id);
+    user.save();
 
     res.redirect('/');
   } catch (error) {
@@ -88,7 +105,17 @@ export const getUpload = (req, res) => {
 };
 
 export const deleteVideo = async (req, res) => {
+  const { user } = req.session;
   const { id } = req.params;
+  const video = await Videos.findById(id);
+
+  if (!video) {
+    return res.status(404).render('404', { pageTitle: 'Video not found.' });
+  }
+  if (String(video.owner) !== String(user._id)) {
+    return res.status(403).redirect('/');
+  }
+
   await Videos.findByIdAndDelete(id);
   res.redirect('/');
 };
