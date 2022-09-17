@@ -7,6 +7,7 @@ import {
   authGithubCallback,
   viewEditPassword,
   editPassword,
+  viewUserProfile,
 } from '../controllers/users';
 import {
   blockNotLoginUser,
@@ -32,6 +33,8 @@ export default function usersRouter() {
     .all(blockNotLoginUser)
     .get(viewEditPassword)
     .post(editPassword);
+
+  router.get('/:id', viewUserProfile);
 
   return router;
 }

@@ -202,7 +202,7 @@ export const editPassword = async (req, res) => {
 
   if (password !== confirm_password) {
     return res.status(400).render('users/edit-password', {
-      pageTitel: 'Edit password',
+      pageTitle: 'Edit password',
       errorMessage: 'Check passowrd',
     });
   }
@@ -211,4 +211,18 @@ export const editPassword = async (req, res) => {
   await user.save();
 
   return res.redirect('/users/logout');
+};
+
+export const viewUserProfile = async (req, res) => {
+  const { id } = req.params;
+  const user = await Users.findById(id);
+
+  if (!user) {
+    return res.status(404).render('404', { pageTitle: 'User not found.' });
+  }
+
+  return res.render('users/profile', {
+    pageTitle: user.name,
+    user,
+  });
 };
