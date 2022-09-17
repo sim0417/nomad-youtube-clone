@@ -45,6 +45,8 @@ export const saveVideo = async (req, res) => {
   const { title, description, hashtags } = req.body;
   const video = await Videos.exists({ _id: id });
 
+  console.log(user);
+
   if (!video) {
     return res.status(404).render('404', { pageTitle: 'Video not found' });
   }
@@ -63,13 +65,15 @@ export const saveVideo = async (req, res) => {
 };
 
 export const postVideo = async (req, res) => {
-  const {
-    session: { user },
-    body: { title, description, hashtags },
-    file: { path: fileUrl },
-  } = req;
-
   try {
+    const {
+      session: {
+        user: { _id: userId },
+      },
+      body: { title, description, hashtags },
+      file: { path: fileUrl },
+    } = req;
+
     const newVideo = await Videos.create({
       title,
       description,
@@ -80,10 +84,10 @@ export const postVideo = async (req, res) => {
         views: 0,
         rating: 0,
       },
-      owner: user._id,
+      owner: userId,
     });
 
-    const user = await Users.findById(user._id);
+    const user = await Users.findById(userId);
     user.videos.push(newVideo._id);
     user.save();
 
