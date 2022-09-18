@@ -45,8 +45,6 @@ export const saveVideo = async (req, res) => {
   const { title, description, hashtags } = req.body;
   const video = await Videos.exists({ _id: id });
 
-  console.log(user);
-
   if (!video) {
     return res.status(404).render('404', { pageTitle: 'Video not found' });
   }
