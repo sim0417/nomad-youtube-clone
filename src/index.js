@@ -29,6 +29,7 @@ app.use(
 app.use(express.urlencoded({ extended: true }));
 app.use(setLocalData);
 app.use('/uploads', express.static('uploads'));
+app.use('/assets', express.static('assets'));
 
 const routers = appRouters();
 routers.forEach(({ path, router }) => app.use(path, router));
