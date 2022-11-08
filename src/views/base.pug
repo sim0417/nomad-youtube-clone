@@ -3,6 +3,7 @@ html(lang="ko" color-mode="user")
   head 
     title #{pageTitle} | #{siteName}
     link(rel="stylesheet" href="https://unpkg.com/mvp.css")
+    link(rel="stylesheet" href="/assets/css/styles.css")
     body
       header
         h1=pageTitle
@@ -31,3 +32,4 @@ html(lang="ko" color-mode="user")
       main
         block contents
     include partials/footer.pug
+    script(src="/assets/js/index.js")

@@ -1,9 +1,17 @@
+const miniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
-const outputPath = path.resolve(__dirname, 'assets', 'js');
+
+const entry = './src/frontend/js/index.js';
+const mode = 'development';
+const watch = true;
+const outputPath = path.resolve(__dirname, 'assets');
+
+const cssPlugin = new miniCssExtractPlugin({
+  filename: 'css/styles.css',
+});
 
 const babelRule = {
   test: /\.js$/,
-  mode: 'development',
   use: {
     loader: 'babel-loader',
     options: {
@@ -12,13 +20,22 @@ const babelRule = {
   },
 };
 
+const scssRule = {
+  test: /\.scss$/,
+  use: [miniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+};
+
 module.exports = {
-  entry: './src/frontend/js/index.js',
+  entry,
+  mode,
+  watch,
   output: {
-    filename: 'index.js',
+    filename: 'js/index.js',
     path: outputPath,
+    clean: true,
   },
+  plugins: [cssPlugin],
   module: {
-    rules: [babelRule],
+    rules: [babelRule, scssRule],
   },
 };
