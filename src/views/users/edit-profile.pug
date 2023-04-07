@@ -1,8 +1,7 @@
 extends ../base.pug
 
 block contents
-  img(width=100, height=100, src=`/${user.avatarUrl}`, alt="user-avatar")
-  form(method="POST" enctype="multipart/form-data")
+  form(method="POST" enctype="multipart/form-data").edit-profile__form
     label(for="avatar") Avatar
     input(type="file" id="avatar" name="avatar" accept="image/*")
     input(type="text", required, placeholder="name" name="name" value=user.name)
@@ -10,5 +9,5 @@ block contents
     input(type="submit", value="Edit profile")
 
     if user.type = 'email'
-      hr
-      a(href="edit-password") Edit password &rarr;
+      div.edit-profile__password
+        a(href="change-password") Change Password &rarr;

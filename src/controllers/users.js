@@ -128,6 +128,7 @@ export const authGithubCallback = async (req, res) => {
         password: '',
         location,
         avatarUrl: avatar_url,
+        socialOnly: true,
       });
     }
 

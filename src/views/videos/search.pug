@@ -2,9 +2,13 @@ extends ../base.pug
 include ../mixins/video
 
 block contents
-  form(method="GET")
+  form(method="GET").search__form
     input(type="text", placeholder="Search by title", name="keyword")
-    input(type="submit" value="Search")
+    button
+      i.fas.fa-search
 
-  each video in videos
-    +video(video)
+  div.video-grid
+    each video in videos
+      +video(video)
+    else
+      span.empty__message No videos found

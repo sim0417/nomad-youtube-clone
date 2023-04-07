@@ -9,6 +9,7 @@ const userSchema = new Schema({
   location: { type: String, default: null },
   avatarUrl: { type: String, default: null },
   videos: [{ type: Schema.Types.ObjectId, ref: 'videos' }],
+  socialOnly: { type: Boolean, default: false },
 });
 
 userSchema.pre('save', async function () {
