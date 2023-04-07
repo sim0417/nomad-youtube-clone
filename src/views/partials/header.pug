@@ -1,7 +1,6 @@
 header
   a(href="/").header__logo
     i.fab.fa-youtube
-  h1=pageTitle
   nav
     ul
       li
@@ -11,11 +10,16 @@ header
         li
           a(href="/videos/upload") Upload Video
         li
-          a(href=`/users/${user._id}`) My Profile
-        li
           a(href="/users/edit-profile") Edit Profile
         li
           a(href="/users/logout") Log Out
+        li
+          a(href=`/users/${user._id}`)
+            if user.socialOnly
+              img(src=user.avatarUrl).header__avatar
+            else 
+              img(src="/" + user.avatarUrl).header__avatar
+
       else
         li
           a(href="/login") Login

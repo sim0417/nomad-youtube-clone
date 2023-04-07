@@ -216,7 +216,13 @@ export const editPassword = async (req, res) => {
 
 export const viewUserProfile = async (req, res) => {
   const { id } = req.params;
-  const user = await Users.findById(id).populate('videos');
+  const user = await Users.findById(id).populate({
+    path: 'videos',
+    populate: {
+      path: 'owner',
+      model: 'Users',
+    },
+  });
 
   if (!user) {
     return res.status(404).render('404', { pageTitle: 'User not found.' });
