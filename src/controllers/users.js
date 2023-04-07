@@ -1,5 +1,4 @@
 import Users from '../models/users';
-import Videos from '../models/videos';
 import bcrypt from 'bcrypt';
 import fetch from 'cross-fetch';
 
