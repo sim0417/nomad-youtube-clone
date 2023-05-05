@@ -1,7 +1,10 @@
 const miniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
 
-const entry = './src/frontend/js/index.js';
+const entry = {
+  main: './src/frontend/js/index.js',
+  videoPlayer: './src/frontend/js/videoPlayer.js',
+};
 const mode = 'development';
 const watch = true;
 const outputPath = path.resolve(__dirname, 'assets');
