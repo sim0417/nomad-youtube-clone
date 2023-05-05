@@ -33,7 +33,7 @@ module.exports = {
   mode,
   watch,
   output: {
-    filename: 'js/index.js',
+    filename: 'js/[name].js',
     path: outputPath,
     clean: true,
   },
