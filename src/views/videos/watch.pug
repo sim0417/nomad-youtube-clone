@@ -1,7 +1,7 @@
 extends ../base.pug
 
 block contents
-  video#video(src=`/${video.fileUrl}`, controls)
+  video#video(src=`/${video.fileUrl}`)
 
   div
     button#paly Play
@@ -14,6 +14,8 @@ block contents
       span  / 
       sapn#totalTime 00:00:00
 
+    div
+      input#timeline(type="range", step="1", min="0", value="0")
 
   //- div
   //-   p=video.description

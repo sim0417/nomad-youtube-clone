@@ -5,6 +5,7 @@ const timeText = document.getElementById('time');
 const volumeRange = document.getElementById('volume');
 const currentTime = document.getElementById('currentTime');
 const totalTime = document.getElementById('totalTime');
+const timeline = document.getElementById('timeline');
 
 let volumeValue = 0.5;
 video.volume = volumeValue;
@@ -54,13 +55,24 @@ const getFormattedTime = (second) => {
 };
 
 const handleVideoLoadMetadata = () => {
-  const videoDuration = video.duration;
-  totalTime.innerText = getFormattedTime(Math.floor(videoDuration));
+  const videoDuration = Math.floor(video.duration);
+  totalTime.innerText = getFormattedTime(videoDuration);
+
+  timeline.max = videoDuration;
 };
 
 const handleVideoTimeUpdate = () => {
-  const videoCurrentTime = video.currentTime;
-  currentTime.innerText = getFormattedTime(Math.floor(videoCurrentTime));
+  const videoCurrentTime = Math.floor(video.currentTime);
+  currentTime.innerText = getFormattedTime(videoCurrentTime);
+  timeline.value = videoCurrentTime;
+};
+
+const handleChangeVideoTimeline = (event) => {
+  const {
+    target: { value },
+  } = event;
+
+  video.currentTime = value;
 };
 
 palyButton.addEventListener('click', handleVideoPlay);
@@ -68,3 +80,4 @@ muteButton.addEventListener('click', handleVideoMute);
 volumeRange.addEventListener('input', handleVolumeChange);
 video.addEventListener('loadedmetadata', handleVideoLoadMetadata);
 video.addEventListener('timeupdate', handleVideoTimeUpdate);
+timeline.addEventListener('input', handleChangeVideoTimeline);
