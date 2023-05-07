@@ -1,6 +1,7 @@
 import newUsersRouter from './users';
 import newVideosRouter from './videos';
 import newRootRouter from './root';
+import newApiRouter from './apis';
 
 export default function appRouters() {
   const routers = [];
@@ -12,6 +13,9 @@ export default function appRouters() {
 
   const rootRouter = newRootRouter();
   routers.push({ path: '/', router: rootRouter });
+
+  const apiRouter = newApiRouter();
+  routers.push({ path: '/api', router: apiRouter });
 
   return routers;
 }
