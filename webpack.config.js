@@ -4,6 +4,7 @@ const path = require('path');
 const entry = {
   main: './src/frontend/js/index.js',
   videoPlayer: './src/frontend/js/videoPlayer.js',
+  recorder: './src/frontend/js/recorder.js',
 };
 const mode = 'development';
 const watch = true;

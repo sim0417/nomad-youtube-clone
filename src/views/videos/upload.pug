@@ -1,7 +1,9 @@
 extends ../base.pug
 
 block contents
-  h3 hello from upload
+  div
+    video(width=300 height=300)#record-view
+    button#record-start-btn Start Recording
 
   if(errorMessage)
     span=errorMessage
@@ -16,3 +18,7 @@ block contents
     label(for="video-hashtags") Hashtags
     input(type="text", required, placeholder="Hashtags, seperated by comma" id="video-hashtags" name="hashtags")
     input(type="submit", value="Upload")
+
+
+block scripts 
+  script(src="/assets/js/recorder.js") 
