@@ -46,9 +46,9 @@ const initRecord = async () => {
 
   recordView.srcObject = stream;
   recordView.play();
-  recordStartButton.addEventListener('click', stopRecordingHandler);
 };
 
 window.onload = () => {
   initRecord();
+  recordStartButton.addEventListener('click', stopRecordingHandler);
 };
