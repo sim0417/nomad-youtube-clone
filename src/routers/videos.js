@@ -26,7 +26,10 @@ export default function videosRouter() {
   router
     .route('/upload')
     .all(blockNotLoginUser)
-    .post(uploadVideoFiles.single('video'), postVideo)
+    .post(
+      uploadVideoFiles.fields([{ name: 'video' }, { name: 'thumb' }]),
+      postVideo,
+    )
     .get(getUpload);
 
   return router;

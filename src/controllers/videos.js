@@ -71,15 +71,17 @@ export const postVideo = async (req, res) => {
         user: { _id: userId },
       },
       body: { title, description, hashtags },
-      file: { path: fileUrl },
     } = req;
+
+    const { video, thumb } = req.files;
 
     const newVideo = await Videos.create({
       title,
       description,
       createdAt: Date.now(),
       hashtags: Videos.parseHashtags(hashtags),
-      fileUrl,
+      fileUrl: video[0].path,
+      thumbUrl: thumb[0].path,
       meta: {
         views: 0,
         rating: 0,
@@ -144,10 +146,10 @@ export const registerView = async (req, res) => {
   const video = await Videos.findById(id);
 
   if (!video) {
-    return res.sendStaus(404);
+    return res.status(404).end();
   }
 
   video.meta.views = video.meta.views + 1;
   await video.save();
-  return res.sendStaus(200);
+  return res.status(200).end();
 };
