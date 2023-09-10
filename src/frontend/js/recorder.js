@@ -39,15 +39,36 @@ const downloadRecordFileHandler = async () => {
 
   ffmpeg.FS('writeFile', 'recording.webm', await fetchFile(videoFile));
   await ffmpeg.run('-i', 'recording.webm', '-r', '60', 'output.mp4');
+
+  await ffmpeg.run(
+    '-i',
+    'recording.webm',
+    '-ss',
+    '00:00:01',
+    '-frames:v',
+    '1',
+    'thumbnail.jpg',
+  );
+
   const mp4VideoFile = ffmpeg.FS('readFile', 'output.mp4');
   const mp4VideoBlob = new Blob([mp4VideoFile.buffer], { type: 'video/mp4' });
   const mp4Url = URL.createObjectURL(mp4VideoBlob);
 
-  const elementDownloadLink = document.createElement('a');
-  elementDownloadLink.href = mp4Url;
-  elementDownloadLink.download = 'my-record-video.mp4';
-  document.body.appendChild(elementDownloadLink);
-  elementDownloadLink.click();
+  const elementVideoDownloadLink = document.createElement('a');
+  elementVideoDownloadLink.href = mp4Url;
+  elementVideoDownloadLink.download = 'my-record-video.mp4';
+  document.body.appendChild(elementVideoDownloadLink);
+  elementVideoDownloadLink.click();
+
+  const thumbnailFile = ffmpeg.FS('readFile', 'thumbnail.jpg');
+  const thumbnailBlob = new Blob([thumbnailFile.buffer], { type: 'image/jpg' });
+  const thumbnailUrl = URL.createObjectURL(thumbnailBlob);
+
+  const elementThumbnailDownloadLink = document.createElement('a');
+  elementThumbnailDownloadLink.href = thumbnailUrl;
+  elementThumbnailDownloadLink.download = 'my-record-thumbnail.jpg';
+  document.body.appendChild(elementThumbnailDownloadLink);
+  elementThumbnailDownloadLink.click();
 };
 
 const initRecord = async () => {
