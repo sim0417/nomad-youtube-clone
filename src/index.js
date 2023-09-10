@@ -28,6 +28,13 @@ app.use(
 );
 app.use(express.urlencoded({ extended: true }));
 app.use(setLocalData);
+
+app.use((req, res, next) => {
+  res.header('Cross-Origin-Embedder-Policy', 'require-corp');
+  res.header('Cross-Origin-Opener-Policy', 'same-origin');
+  next();
+});
+
 app.use('/uploads', express.static('uploads'));
 app.use('/assets', express.static('assets'));
 
