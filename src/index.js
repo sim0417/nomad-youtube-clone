@@ -4,6 +4,7 @@ import './models/users';
 import path from 'path';
 import express from 'express';
 import session from 'express-session';
+import flash from 'express-flash';
 import favicon from 'serve-favicon';
 import morgan from 'morgan';
 import appRouters from './routers';
@@ -16,6 +17,7 @@ const logger = morgan('dev');
 
 app.set('views', `${process.cwd()}/src/views`);
 app.set('view engine', 'pug');
+app.use(flash());
 app.use(favicon(path.join(__dirname, 'public', 'favicon.png')));
 app.use(logger);
 app.use(
